@@ -5,17 +5,16 @@ import {
     login,
     register,
     resendOtp,
-    resetPasswordLink,
+    resetPasswordLink, twoFactorAuth,
     verifyOtp
 } from "../controllers/auth/authController.js";
-import twoFactorAuthOtp from "../utils/twoFactorAuth.js";
 const router = Router()
 
 router
 .post('/register',register)
 .post('/login',login)
 .post('/verify',verifyOtp)
-.post('/two-factor-auth',twoFactorAuthOtp)
+.post('/two-factor-auth',twoFactorAuth)
 .post('/resend-otp',resendOtp)
 .post('/reset-password-link',resetPasswordLink)
     .patch('/forgot-password',forgotPassword)

@@ -2,9 +2,15 @@ import speakeasy from "speakeasy";
 import User from "../../models/User.js";
 import generateOtp from "../../utils/generateOtp.js";
 import generateToken from "../../utils/generateToken.js";
-import {encrypt, passwordHash} from "../../utils/hash.js";
-import { loginSchema, registerSchema } from "./authValidator.js";
-
+import { encrypt, passwordHash } from "../../utils/hash.js";
+import {
+  changePasswordSchema,
+  forgotPasswordSchema,
+  loginSchema,
+  registerSchema,
+  resendSchema,
+  verifyOtpSchema,
+} from "./authValidator.js";
 
 const register = async (req, res) => {
   const { error } = registerSchema.validate(req.body);
@@ -62,12 +68,14 @@ const login = async (req, res) => {
     if (!isPasswordValid)
       return res.status(401).json({ message: "Invalid password" });
     if (user.is2FAEnabled) {
-      speakeasy.totp({
+      const otp = speakeasy.totp({
         secret: user.otpSecret,
         encoding: "base32",
       });
       // await twoFactorAuthOtp(email, otp);
-      res.status(202).json({ message: "OTP sent. Please verify your 2FA." });
+      res
+        .status(202)
+        .json({ message: "OTP sent. Please verify your 2FA.", otp });
     } else if (user.otpVerified) {
       const token = generateToken(user);
       res.cookie("token", token, {
@@ -94,9 +102,9 @@ const login = async (req, res) => {
   }
 };
 const verifyOtp = async (req, res) => {
+  const { error } = verifyOtpSchema.validate(req.body);
+  if (error) return res.status(400).json({ message: error.details[0].message });
   const { otp, email } = req.body;
-  if (!otp || !email)
-    return res.status(400).json({ message: "Invalid otp or email" });
   try {
     const user = await User.findOne({ email });
     if (user.otpVerified)
@@ -104,9 +112,7 @@ const verifyOtp = async (req, res) => {
     if (!user) return res.status(401).json({ message: "User not found" });
     if (user.otp !== otp || user.otpExpiry < new Date())
       return res.status(401).json({ message: "Invalid or Expired OTP" });
-    await user.updateOne(
-      { otp: null, otpExpiry: null, otpVerified: true }
-    );
+    await user.updateOne({ otp: null, otpExpiry: null, otpVerified: true });
     res.status(200).json({ message: "Email verified successfully" });
   } catch (error) {
     console.error(error);
@@ -116,9 +122,9 @@ const verifyOtp = async (req, res) => {
   }
 };
 const twoFactorAuth = async (req, res) => {
+  const { error } = verifyOtpSchema.validate(req.body);
+  if (error) return res.status(400).json({ message: error.details[0].message });
   const { email, otp } = req.body;
-  if (!email || !otp)
-    return res.status(400).json({ message: "Email and OTP are required" });
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -148,8 +154,9 @@ const twoFactorAuth = async (req, res) => {
   }
 };
 const resendOtp = async (req, res) => {
+  const { error } = resendSchema.validate(req.body);
+  if (error) return res.status(400).json({ message: error.details[0].message });
   const { email } = req.body;
-  if (!email) return res.status(400).json({ message: "Email is required" });
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -168,8 +175,9 @@ const resendOtp = async (req, res) => {
   }
 };
 const resetPasswordLink = async (req, res) => {
+  const { error } = resendSchema.validate(req.body);
+  if (error) return res.status(400).json({ message: error.details[0].message });
   const { email } = req.body;
-  if (!email) return res.status(400).json({ message: "Email is required" });
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -177,20 +185,16 @@ const resetPasswordLink = async (req, res) => {
       const encryptedToken = encrypt(email);
       console.log(encryptedToken);
       const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
-      await user.updateOne(
-        {
-          encryptedToken: encryptedToken.encryptedData,
-          encryptedTokenIv: encryptedToken.iv,
-          otpExpiry,
-        }
-      );
+      await user.updateOne({
+        encryptedToken: encryptedToken.encryptedData,
+        encryptedTokenIv: encryptedToken.iv,
+        otpExpiry,
+      });
       // Here Have to write Forgot Pass word mail function
-      res
-        .status(200)
-        .json({
-          message:
-            "Password Reset link sent to your email. Please check your email to reset your password.",
-        });
+      res.status(200).json({
+        message:
+          "Password Reset link sent to your email. Please check your email to reset your password.",
+      });
     } else {
       return res.status(401).json({ message: "User not verified" });
     }
@@ -202,17 +206,17 @@ const resetPasswordLink = async (req, res) => {
   }
 };
 const changePassword = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password)
-    return res.status(400).json({ message: "Email and password are required" });
+  const { error } = changePasswordSchema.validate(req.body);
+  if (error) return res.status(400).json({ message: error.details[0].message });
+  const { email, currentPassword, newPassword } = req.body;
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "User not found" });
-    const isPasswordValid = await user.comparePassword(password);
+    const isPasswordValid = await user.comparePassword(currentPassword);
     if (!isPasswordValid)
       return res.status(401).json({ message: "Invalid password" });
-    const hashedPassword = await passwordHash(password)
-    await user.updateOne({ password:hashedPassword });
+    const hashedPassword = await passwordHash(newPassword);
+    await user.updateOne({ password: hashedPassword });
     res.status(200).json({ message: "Password changed successfully" });
   } catch (error) {
     console.error(error);
@@ -221,31 +225,39 @@ const changePassword = async (req, res) => {
       .json({ message: "Internal server error", error: error?.message });
   }
 };
-const forgotPassword = async(req,res)=>{
-  const {token} = req.query
-  console.log(token);
-  const {password} = req.body
-  try{
-    const user = await User.findOne({encryptedToken:token})
-    if(!user) return res.status(404).json({message:"User not found"})
-    const hashedPassword = await passwordHash(password)
-    await user.updateOne({password:hashedPassword,encryptedToken:null,encryptedTokenIv:null,otpExpiry:null})
+const forgotPassword = async (req, res) => {
+  const { error } = forgotPasswordSchema.validate(req.body);
+  if (error) return res.status(400).json({ message: error.details[0].message });
+  const { token } = req.query;
+  const { password } = req.body;
+  try {
+    const user = await User.findOne({ encryptedToken: token });
+    if (!user) return res.status(404).json({ message: "User not found" });
+    if (user.otpExpiry < new Date())
+      return res.status(401).json({ message: "password reset link expired" });
+    const hashedPassword = await passwordHash(password);
+    await user.updateOne({
+      password: hashedPassword,
+      encryptedToken: null,
+      encryptedTokenIv: null,
+      otpExpiry: null,
+    });
 
-res.status(200).json({message:"Password changed successfully"})
-  }catch (error) {
+    res.status(200).json({ message: "Password changed successfully" });
+  } catch (error) {
     console.error(error);
     res
       .status(500)
       .json({ message: "Internal server error", error: error?.message });
   }
-}
+};
 export {
+  changePassword,
+  forgotPassword,
   login,
   register,
   resendOtp,
   resetPasswordLink,
   twoFactorAuth,
   verifyOtp,
-    forgotPassword,
-    changePassword
 };

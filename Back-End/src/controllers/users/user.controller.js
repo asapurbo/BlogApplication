@@ -1,9 +1,9 @@
-import User from "../models/User.model.js";
-
+import User from "../../models/User.model.js";
+import BlogPost from '../../models/BlogPost.model.js'
 const getUser = async (req,res) => {
     const {id} = req.params
     try{
-        const user = await User.findById(id)
+        const user = await User.findById(id).select("-password -_id -otp -otpExpiry -otpSecret -encryptedTokenIv").populate("posts")
         if(!user)return res.status(404).json({message:"User not found"})
         res.status(200).json({
             message:"User found",
@@ -17,11 +17,10 @@ const getUser = async (req,res) => {
 const updateUser = async (req,res) => {
     const {id} = req.params
     try{
-        const user = await User.findByIdAndUpdate(id,req.body,{new:true})
+        const user = await User.findByIdAndUpdate(id,req.body)
         if(!user)return res.status(404).json({message:"User not found"})
-        res.status(204).json({
+        res.status(200).json({
             message:"User updated",
-            user // just for testing
         })
     }catch (error) {
         console.error(error)
@@ -32,7 +31,7 @@ const deleteUser = async (req,res)=>{
     const {id} = req.params
     try{
       await User.findByIdAndDelete(id)
-        res.status(204).json({
+        res.status(200).json({
             message:"User deleted",
         })
     }catch (error) {

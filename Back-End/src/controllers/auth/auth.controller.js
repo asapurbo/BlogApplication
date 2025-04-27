@@ -1,5 +1,5 @@
 import speakeasy from "speakeasy";
-import User from "../../models/User.js";
+import User from "../../models/User.model.js";
 import generateOtp from "../../utils/generateOtp.js";
 import generateToken from "../../utils/generateToken.js";
 import { encrypt, passwordHash } from "../../utils/hash.js";

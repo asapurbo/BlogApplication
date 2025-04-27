@@ -1,5 +1,6 @@
 import { compare, genSalt, hash } from "bcryptjs";
 import mongoose, { Schema, model } from "mongoose";
+import {type} from "node:os";
 const UserSchema = new Schema(
   {
     firstName: {
@@ -76,7 +77,14 @@ const UserSchema = new Schema(
       encryptedTokenIv:{
         type: String,
         default: null,
-      }
+      },
+      posts:[
+          {
+              type:Schema.Types.ObjectId,
+              ref:'BlogPost',
+              default:[],
+          }
+      ]
   },
   { timestamps: true }
 );

@@ -1,5 +1,6 @@
 import { compare, genSalt, hash } from "bcryptjs";
 import mongoose, { Schema, model } from "mongoose";
+import {type} from "node:os";
 const UserSchema = new Schema(
   {
     firstName: {
@@ -22,10 +23,12 @@ const UserSchema = new Schema(
       lowercase: true,
       unique: true,
       required: "Email address is required",
+        immutable:true,
       match: [
         /^[a-z]+([.-]?[a-z]+)*@[a-z]+([.-]?[a-z]+)*(\.[a-z]{2,3})+$/,
         "Please fill a valid email address",
       ],
+
     },
     country: {
       type: String,
@@ -74,7 +77,14 @@ const UserSchema = new Schema(
       encryptedTokenIv:{
         type: String,
         default: null,
-      }
+      },
+      posts:[
+          {
+              type:Schema.Types.ObjectId,
+              ref:'BlogPost',
+              default:[],
+          }
+      ]
   },
   { timestamps: true }
 );

@@ -1,4 +1,4 @@
-import mongoose, {Schema,models,model} from 'mongoose'
+import mongoose, {Schema,model} from 'mongoose'
 const BlogPostSchema = new Schema({
     title: {
         type: String,
@@ -35,5 +35,5 @@ const BlogPostSchema = new Schema({
         default: false
     },
 },{timestamps:true})
-const BlogPost = models.BlogPost || model('BlogPost',BlogPostSchema)
+const BlogPost = mongoose.models.BlogPost || model('BlogPost',BlogPostSchema)
 export default BlogPost

@@ -22,10 +22,12 @@ const UserSchema = new Schema(
       lowercase: true,
       unique: true,
       required: "Email address is required",
+        immutable:true,
       match: [
         /^[a-z]+([.-]?[a-z]+)*@[a-z]+([.-]?[a-z]+)*(\.[a-z]{2,3})+$/,
         "Please fill a valid email address",
       ],
+
     },
     country: {
       type: String,

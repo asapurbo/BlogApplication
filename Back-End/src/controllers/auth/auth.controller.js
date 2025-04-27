@@ -10,7 +10,7 @@ import {
   registerSchema,
   resendSchema,
   verifyOtpSchema,
-} from "./authValidator.js";
+} from "./auth.validator.js";
 
 const register = async (req, res) => {
   const { error } = registerSchema.validate(req.body);

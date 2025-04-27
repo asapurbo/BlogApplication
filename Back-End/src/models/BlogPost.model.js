@@ -35,5 +35,18 @@ const BlogPostSchema = new Schema({
         default: false
     },
 },{timestamps:true})
+BlogPostSchema.index(
+    {
+        title: 'text',
+        body: 'text',
+    },
+    {
+        weights: {
+            title: 10,
+            body: 1,
+        },
+        name: 'blogPostSearch',
+    },
+);
 const BlogPost = mongoose.models.BlogPost || model('BlogPost',BlogPostSchema)
 export default BlogPost

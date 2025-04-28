@@ -11,6 +11,8 @@ import {
   resendSchema,
   verifyOtpSchema,
 } from "./auth.validator.js";
+import setCookie from "../../services/cookie.js";
+import verifyOtpSend from "../../services/verifyOtpSend.service.js";
 
 const register = async (req, res) => {
   const { error } = registerSchema.validate(req.body);
@@ -47,7 +49,7 @@ const register = async (req, res) => {
       occupation,
     });
     await user.save();
-    // await verifyOtpSend(email, otp);
+    await verifyOtpSend(email, otp);
     res.status(200).json({ message: "OTP sent. Please verify your email." });
   } catch (error) {
     console.error(error);
@@ -78,11 +80,26 @@ const login = async (req, res) => {
         .json({ message: "OTP sent. Please verify your 2FA.", otp });
     } else if (user.otpVerified) {
       const token = generateToken(user);
-      res.cookie("token", token, {
-        httpOnly: true,
-        // secure: process.env.NODE_ENV === 'production',
-        sameSite: "strict",
-      });
+      setCookie(res,[
+        {
+          name:"token",
+          value:token,
+          options:{
+              httpOnly: true,
+              // secure: process.env.NODE_ENV === 'production',
+              sameSite: "strict",
+          }
+        },
+        {
+          name:"role",
+          value:user?.role,
+          options:{
+            httpOnly: true,
+            // secure: process.env.NODE_ENV === 'production',
+            sameSite: "strict",
+          }
+        }
+      ])
       res.status(200).json({
         message: "Login successful",
         token,
@@ -136,11 +153,26 @@ const twoFactorAuth = async (req, res) => {
     });
     if (!validOtp) return res.status(401).json({ message: "Invalid OTP" });
     const token = generateToken(user);
-    res.cookie("token", token, {
-      httpOnly: true,
-      // secure: process.env.NODE_ENV === 'production',
-      sameSite: "strict",
-    });
+    setCookie(res,[
+      {
+        name:"token",
+        value:token,
+        options:{
+          httpOnly: true,
+          // secure: process.env.NODE_ENV === 'production',
+          sameSite: "strict",
+        }
+      },
+      {
+        name:"role",
+        value:user?.role,
+        options:{
+          httpOnly: true,
+          // secure: process.env.NODE_ENV === 'production',
+          sameSite: "strict",
+        }
+      }
+    ])
     res.status(200).json({
       message: "Login successful & OTP verified",
       token,
@@ -165,7 +197,7 @@ const resendOtp = async (req, res) => {
     const otp = generateOtp(6);
     const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
     await user.updateOne({ otp, otpExpiry });
-    // await verifyOtpSend(email, otp);
+    await verifyOtpSend(email, otp);
     res.status(200).json({ message: "OTP sent. Please verify your email." });
   } catch (error) {
     console.error(error);

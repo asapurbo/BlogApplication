@@ -6,6 +6,8 @@ import userRoute from "./routes/user.route.js";
 import blogPostRoute from "./routes/blogPost.route.js";
 import categoryRoute from "./routes/category.route.js";
 import commentRoute from "./routes/comment.route.js";
+import errorHandler from "./middleware/error.middleware.js";
+import notFoundMiddleware from "./middleware/notFound.middleware.js";
 
 // App Init
 
@@ -16,6 +18,7 @@ APP.use(cors({
     methods:["GET","POST","PUT","DELETE"],
     credentials:true
 }))
+
 APP.disable("x-powered-by")
 APP.use(morgan(process.env.NODE_ENV==='production'?'combined':'dev'))
 
@@ -29,7 +32,10 @@ APP
 
 // APP.use('/api/v1/admin')
 
-
+// Error Handling Middleware
+APP
+    .use(notFoundMiddleware)
+    .use(errorHandler)
 
 
 export  default  APP

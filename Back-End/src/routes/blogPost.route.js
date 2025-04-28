@@ -8,7 +8,7 @@ import {
   getBlogPosts,
   updateBlogPost,
   updateImage,
-} from "../controllers/blogPost/blogPost.controller.js";
+} from "../controllers/blogPosts/blogPost.controller.js";
 const router = Router();
 router
   .post("", upload.single("image"), createBlogPost)

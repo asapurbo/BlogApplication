@@ -1,23 +1,12 @@
-import { configDotenv } from 'dotenv';
-import nodemailer from 'nodemailer';
-configDotenv();
-export const transporter = nodemailer.createTransport({
-    service: 'smtp',
-    auth: {
-        user: process.env._SMTP_USERNAME,
-        pass: process.env._SMTP_PASSWORD,
-    },
-    host: process.env._SMTP_HOST,
-    port: Number(process.env._SMTP_PORT),
-    secure: process.env._SMTP_SECURE === 'true',
-});
+import transporter from "../config/nodemailer.config.js";
+
 const verifyOtpSend = async (email, otp) => {
     await transporter.sendMail({
         from: process.env._SMTP_USERNAME,
         to: email,
         subject: 'Verify Your Email',
         html: `<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

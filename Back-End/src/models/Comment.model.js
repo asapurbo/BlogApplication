@@ -1,4 +1,4 @@
-import {Schema,models,model} from  'mongoose'
+import mongoose,{Schema,model} from  'mongoose'
 const CommentSchema = new Schema({
     comment:String,
     blogPost:{
@@ -12,3 +12,6 @@ const CommentSchema = new Schema({
         required:true
     }
 })
+const Comment =
+    mongoose.models.comment || model('Comment', CommentSchema);
+export default Comment;

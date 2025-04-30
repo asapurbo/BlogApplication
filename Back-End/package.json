@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=production node src/server.js",
+    "build": "webpack",
+    "start": "NODE_ENV=production node dist/server.cjs",
     "dev": "NODE_ENV=development nodemon src/server.js",
     "lint": "eslint src/**/*.js"
   },
@@ -28,6 +29,10 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
-    "@types/node": "^22.14.1"
+    "@types/node": "^22.14.1",
+    "babel-loader": "^10.0.0",
+    "webpack": "^5.99.7",
+    "webpack-cli": "^6.0.1",
+    "webpack-node-externals": "^3.0.0"
   }
 }

@@ -1,4 +1,4 @@
-import { transporter } from '../services/verifyOtpSend.service.js';
+import transporter from "../config/nodemailer.config.js";
 
 const twoFactorAuthOtp = async (email, otp) => {
     await transporter.sendMail({
@@ -55,16 +55,6 @@ const twoFactorAuthOtp = async (email, otp) => {
                             <p style="font-size: 14px; color: #777; margin: 15px 0;">This OTP is valid for <strong>10 minutes</strong>. Please do not share it with anyone.</p>
                         </td>
                     </tr>
-
-                    <!-- Button -->
-                    <tr>
-                        <td align="center" style="padding-top: 20px;">
-                            <a href="https://yourwebsite.com/login" style="background: #007bff; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-size: 16px; font-weight: bold; display: inline-block;">
-                                Login Now
-                            </a>
-                        </td>
-                    </tr>
-
                     <!-- Footer -->
                     <tr>
                         <td style="padding-top: 25px; font-size: 13px; color: #888;">

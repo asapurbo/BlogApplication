@@ -1,4 +1,18 @@
-import mongoose, {Schema,model} from 'mongoose'
+import mongoose, {model, Schema} from 'mongoose'
+
+const reactionTypes = ['like', 'love', 'funny', 'insightful'];
+const ReactionSchema = new Schema({
+    type: {
+        type: String,
+        enum: reactionTypes,
+        required: true,
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+}, {_id: false})
 const BlogPostSchema = new Schema({
     title: {
         type: String,
@@ -34,7 +48,14 @@ const BlogPostSchema = new Schema({
         type: Boolean,
         default: false
     },
-},{timestamps:true})
+    reactions: [ReactionSchema],
+    reactionCounts: {
+        type: Map,
+        of: Number,
+        default: {}
+    }
+
+}, {timestamps: true})
 BlogPostSchema.index(
     {
         title: 'text',
@@ -48,5 +69,5 @@ BlogPostSchema.index(
         name: 'blogPostSearch',
     },
 );
-const BlogPost = mongoose.models.BlogPost || model('BlogPost',BlogPostSchema)
+const BlogPost = mongoose.models.BlogPost || model('BlogPost', BlogPostSchema)
 export default BlogPost

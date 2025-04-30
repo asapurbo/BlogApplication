@@ -11,11 +11,13 @@ import {
     resendSchema,
     verifyOtpSchema,
 } from "./auth.validator.js";
-import setCookie from "../../services/cookie.js";
+import setCookie from "../../utils/cookie.js";
 import verifyOtpSend from "../../services/verifyOtpSend.service.js";
 import twoFactorAuthOtp from "../../services/twoFactorAuth.service.js";
 import resetPassLink from "../../services/reset-pass-link.service.js";
 import userWelcomeMail from "../../services/user-welcome-mail.service.js";
+import loginInfo from "../../utils/loginInfo.js";
+import sendLoginNotificationService from "../../services/sendLoginNotification.service.js";
 
 const register = async (req, res) => {
     const {error} = registerSchema.validate(req.body);
@@ -65,6 +67,7 @@ const login = async (req, res) => {
     const {error} = loginSchema.validate(req.body);
     if (error) return res.status(400).json({message: error.details[0].message});
     const {email, password} = req.body;
+
     try {
         const user = await User.findOne({email});
         if (!user)
@@ -72,6 +75,7 @@ const login = async (req, res) => {
         const isPasswordValid = await user.comparePassword(password);
         if (!isPasswordValid)
             return res.status(401).json({message: "Invalid password"});
+        const {parsedUserAgent, ip} = await loginInfo(req);
         if (user.is2FAEnabled) {
             const otp = speakeasy.totp({
                 secret: user.otpSecret,
@@ -103,6 +107,7 @@ const login = async (req, res) => {
                     }
                 }
             ])
+            await sendLoginNotificationService(email, ip, parsedUserAgent.os, parsedUserAgent.browser)
             res.status(200).json({
                 message: "Login successful",
                 token,
@@ -147,6 +152,7 @@ const twoFactorAuth = async (req, res) => {
     const {email, otp} = req.body;
     try {
         const user = await User.findOne({email});
+        const {parsedUserAgent, ip} = await loginInfo(req);
         if (!user) return res.status(404).json({message: "User not found"});
         const validOtp = speakeasy.totp.verify({
             secret: user.otpSecret,
@@ -176,6 +182,7 @@ const twoFactorAuth = async (req, res) => {
                 }
             }
         ])
+        await sendLoginNotificationService(email, ip, parsedUserAgent.os, parsedUserAgent.browser)
         res.status(200).json({
             message: "Login successful & OTP verified",
             token,
@@ -218,14 +225,13 @@ const resetPasswordLink = async (req, res) => {
         if (!user) return res.status(404).json({message: "User not found"});
         if (user.otpVerified) {
             const encryptedToken = encrypt(email);
-            console.log(encryptedToken);
             const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
             await user.updateOne({
                 encryptedToken: encryptedToken.encryptedData,
                 encryptedTokenIv: encryptedToken.iv,
                 otpExpiry,
             });
-            await resetPassLink(email, encryptedToken)
+            await resetPassLink(email, encryptedToken.encryptedData)
             res.status(200).json({
                 message:
                     "Password Reset link sent to your email. Please check your email to reset your password.",
@@ -248,8 +254,7 @@ const changePassword = async (req, res) => {
         const user = await User.findOne({email});
         if (!user) return res.status(404).json({message: "User not found"});
         const isPasswordValid = await user.comparePassword(currentPassword);
-        if (!isPasswordValid)
-            return res.status(401).json({message: "Invalid password"});
+        if (!isPasswordValid) return res.status(401).json({message: "Invalid password"});
         const hashedPassword = await passwordHash(newPassword);
         await user.updateOne({password: hashedPassword});
         res.status(200).json({message: "Password changed successfully"});

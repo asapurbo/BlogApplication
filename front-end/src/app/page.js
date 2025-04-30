@@ -1,103 +1,161 @@
-import Image from "next/image";
+import Image from 'next/image';
+import user_logo from '@/assets/user_logo.png';
+import Flex from '@/app/components/Flex';
+import LabelText from '@/app/components/LabelText';
+import Paragraph from '@/app/components/Paragraph';
+import MutedText from '@/app/components/MutedText';
+import { SiDatefns } from 'react-icons/si';
+import { FaHandshakeSimple } from 'react-icons/fa6';
+import { FaRegComment } from 'react-icons/fa';
+import xyz from '../assets/xyz.webp'
+import { FaBookBookmark } from "react-icons/fa6";
+import { BsThreeDots } from "react-icons/bs";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    return (
+        <div className="bg-bg py-5 w-[90%] h-screen mx-auto overflow-y-scroll pt-20 px-2 md:pt-16">
+            <div className='border border-solid border-border_color rounded-lg p-5'>
+                <Flex className="bg-card_bg py-5 px-4 gap-x-4 rounded-lg">
+                    <div className="w-[70%]">
+                        <Flex>
+                            <div
+                                className={
+                                    'w-[32px] h-[32px] rounded-full overflow-hidden border border-solid border-border_color cursor-pointer mr-3'
+                                }
+                            >
+                                <Image src={user_logo} alt={'logo'} />
+                            </div>
+                            <LabelText>henry</LabelText>
+                        </Flex>
+                        <Paragraph className="mt-4">
+                            RAG in Action: Build your Own Local PDF Chatbot as a
+                            Beginner
+                        </Paragraph>
+                        <MutedText className="mt-4">
+                            Understanding chunking, embeddings and vector search
+                            better by building a PDF chatbot with LangChain,
+                            Ollama and Mistral.
+                        </MutedText>
+                    </div>
+                    <div className='w-[30%]'>
+                        <Image src={xyz} alt='image' className='w-full'/>
+                    </div>
+                </Flex>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+                <Flex className="mt-4 gap-x-3">
+                    <Flex className="gap-x-2">
+                        <SiDatefns className="text-primary text-10" />
+                        <LabelText>12 April 2013</LabelText>
+                    </Flex>
+                    <Flex className="gap-x-2">
+                        <FaHandshakeSimple className="text-primary text-10" />
+                        <LabelText>11k</LabelText>
+                    </Flex>
+                    <Flex className="gap-x-2">
+                        <FaRegComment className="text-primary text-10" />
+                        <LabelText>100</LabelText>
+                    </Flex>
+                    <FaBookBookmark className="text-primary text-10" />
+                    <BsThreeDots className="text-primary text-10" />
+                </Flex>
+            </div>
+
+
+            {/* 1 */}
+
+            <div className='border border-solid border-border_color rounded-lg p-5 mt-4'>
+                <Flex className="bg-card_bg py-5 px-4 gap-x-4 rounded-lg">
+                    <div className="w-[70%]">
+                        <Flex>
+                            <div
+                                className={
+                                    'w-[32px] h-[32px] rounded-full overflow-hidden border border-solid border-border_color cursor-pointer mr-3'
+                                }
+                            >
+                                <Image src={user_logo} alt={'logo'} />
+                            </div>
+                            <LabelText>henry</LabelText>
+                        </Flex>
+                        <Paragraph className="mt-4">
+                            RAG in Action: Build your Own Local PDF Chatbot as a
+                            Beginner
+                        </Paragraph>
+                        <MutedText className="mt-4">
+                            Understanding chunking, embeddings and vector search
+                            better by building a PDF chatbot with LangChain,
+                            Ollama and Mistral.
+                        </MutedText>
+                    </div>
+                    <div className='w-[30%]'>
+                        <Image src={xyz} alt='image' className='w-full'/>
+                    </div>
+                </Flex>
+
+                <Flex className="mt-4 gap-x-3">
+                    <Flex className="gap-x-2">
+                        <SiDatefns className="text-primary text-10" />
+                        <LabelText>12 April 2013</LabelText>
+                    </Flex>
+                    <Flex className="gap-x-2">
+                        <FaHandshakeSimple className="text-primary text-10" />
+                        <LabelText>11k</LabelText>
+                    </Flex>
+                    <Flex className="gap-x-2">
+                        <FaRegComment className="text-primary text-10" />
+                        <LabelText>100</LabelText>
+                    </Flex>
+                    <FaBookBookmark className="text-primary text-10" />
+                    <BsThreeDots className="text-primary text-10" />
+                </Flex>
+            </div>
+
+            {/* 2 */}
+
+            <div className='border border-solid border-border_color rounded-lg p-5 mt-4'>
+                <Flex className="bg-card_bg py-5 px-4 gap-x-4 rounded-lg">
+                    <div className="w-[70%]">
+                        <Flex>
+                            <div
+                                className={
+                                    'w-[32px] h-[32px] rounded-full overflow-hidden border border-solid border-border_color cursor-pointer mr-3'
+                                }
+                            >
+                                <Image src={user_logo} alt={'logo'} />
+                            </div>
+                            <LabelText>henry</LabelText>
+                        </Flex>
+                        <Paragraph className="mt-4">
+                            RAG in Action: Build your Own Local PDF Chatbot as a
+                            Beginner
+                        </Paragraph>
+                        <MutedText className="mt-4">
+                            Understanding chunking, embeddings and vector search
+                            better by building a PDF chatbot with LangChain,
+                            Ollama and Mistral.
+                        </MutedText>
+                    </div>
+                    <div className='w-[30%]'>
+                        <Image src={xyz} alt='image' className='w-full'/>
+                    </div>
+                </Flex>
+
+                <Flex className="mt-4 gap-x-3">
+                    <Flex className="gap-x-2">
+                        <SiDatefns className="text-primary text-10" />
+                        <LabelText>12 April 2013</LabelText>
+                    </Flex>
+                    <Flex className="gap-x-2">
+                        <FaHandshakeSimple className="text-primary text-10" />
+                        <LabelText>11k</LabelText>
+                    </Flex>
+                    <Flex className="gap-x-2">
+                        <FaRegComment className="text-primary text-10" />
+                        <LabelText>100</LabelText>
+                    </Flex>
+                    <FaBookBookmark className="text-primary text-10" />
+                    <BsThreeDots className="text-primary text-10" />
+                </Flex>
+            </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    );
 }

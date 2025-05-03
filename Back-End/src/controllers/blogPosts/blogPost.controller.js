@@ -2,6 +2,7 @@ import BlogPost from "../../models/BlogPost.model.js";
 import User from "../../models/User.model.js";
 import imageUploadService from "../../services/image-upload.service.js";
 import blogPostSchema from "./blogPost.validator.js";
+import Category from "../../models/category.model.js";
 
 void User;
 const createBlogPost = async (req, res) => {
@@ -41,10 +42,30 @@ const getBlogPost = async (req, res) => {
 }
 const getBlogPosts = async (req, res) => {
     try {
-        const posts = await BlogPost.find().populate("author", "firstName lastName -_id").sort({createdAt: -1})
+        const {category, page} = req.query
+        const pageSize = 10;
+        const currentPage = Number(page) || 1;
+        const skip = (currentPage - 1) * pageSize;
+        const filter = {}
+        if (typeof category === 'string') {
+            const categoryId = await Category.findOne({name: category}).select("_id")
+            categoryId ? filter.category = categoryId : res.status(404).json({message: "Category not found"})
+        }
+
+        const posts = await BlogPost
+            .find(filter)
+            .skip(skip)
+            .limit(pageSize)
+            .sort({createdAt: -1})
+            .populate("author category", "firstName lastName -_id name -_id")
+        const totalPosts = await BlogPost.countDocuments(filter)
+        if (!totalPosts) return res.status(404).json({message: "Blog posts not found"})
         res.status(200).json({
             message: "Blog posts found",
-            posts
+            posts,
+            currentPage,
+            totalPages: Math.ceil(await BlogPost.countDocuments(filter) / pageSize),
+
         })
     } catch (error) {
         console.error(error)
@@ -94,7 +115,7 @@ const blogPostsSearch = async (req, res) => {
     try {
         if (!/^[a-zA-Z0-9\s\-]+$/.test(q)) return res.status(400).json({error: 'Invalid search query'});
         const results = await BlogPost.find(
-            {$text: {$search: q}},
+            {$text: {$search: q, $language: 'en'}},
             {score: {$meta: 'textScore'}},
         ).sort({score: {$meta: 'textScore'}});
         if (results.length === 0) return res.status(404).json({message: 'No post found matching the query'});

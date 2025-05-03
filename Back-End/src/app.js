@@ -9,19 +9,21 @@ import commentRoute from "./routes/comment.route.js";
 import errorHandler from "./middleware/error.middleware.js";
 import notFoundMiddleware from "./middleware/notFound.middleware.js";
 import reactionRoute from "./routes/reaction.route.js";
+import adminRoute from "./routes/admin.route.js";
 
 // App Init
 
 const APP = express()
-APP.use(express.json())
-APP.use(cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-}))
-
-APP.disable("x-powered-by")
-APP.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'))
+APP
+    .use(express.json())
+    .use(cors({
+        origin: "*",
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true
+    }))
+    .use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'))
+APP
+    .disable("x-powered-by")
 
 // Routes
 APP
@@ -31,8 +33,8 @@ APP
     .use('/api/v1/categories', categoryRoute)
     .use('/api/v1/comments', commentRoute)
     .use('/api/v1/reactions', reactionRoute)
+    .use('/api/v1/admin', adminRoute)
 
-// APP.use('/api/v1/admin')
 
 // Error Handling Middleware
 APP

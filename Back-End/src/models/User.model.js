@@ -101,5 +101,16 @@ UserSchema.pre("save", async function (next) {
 UserSchema.methods.comparePassword = async function (candidatePassword) {
     return await compare(candidatePassword, this.password);
 };
+UserSchema.index({
+    firstName: "text",
+    lastName: "text",
+    role: 1
+}, {
+    weights: {
+        firstName: 10,
+        lastName: 1,
+    },
+    name: "writerSearch",
+})
 const User = mongoose.models.User || model("User", UserSchema);
 export default User;

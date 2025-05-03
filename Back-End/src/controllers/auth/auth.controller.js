@@ -70,11 +70,9 @@ const login = async (req, res) => {
 
     try {
         const user = await User.findOne({email});
-        if (!user)
-            return res.status(401).json({message: "Invalid email or password"});
+        if (!user) return res.status(401).json({message: "Invalid email or password"});
         const isPasswordValid = await user.comparePassword(password);
-        if (!isPasswordValid)
-            return res.status(401).json({message: "Invalid password"});
+        if (!isPasswordValid) return res.status(401).json({message: "Invalid password"});
         const {parsedUserAgent, ip} = await loginInfo(req);
         if (user.is2FAEnabled) {
             const otp = speakeasy.totp({
@@ -84,7 +82,7 @@ const login = async (req, res) => {
             await twoFactorAuthOtp(email, otp);
             res
                 .status(202)
-                .json({message: "OTP sent. Please verify your 2FA.", otp});
+                .json({message: "OTP sent. Please verify your 2FA."});
         } else if (user.otpVerified) {
             const token = generateToken(user);
             setCookie(res, [
@@ -132,8 +130,7 @@ const verifyOtp = async (req, res) => {
     const {otp, email} = req.body;
     try {
         const user = await User.findOne({email});
-        if (user.otpVerified)
-            return res.status(401).json({message: "User already verified"});
+        if (user.otpVerified) return res.status(401).json({message: "User already verified"});
         if (!user) return res.status(401).json({message: "User not found"});
         if (user.otp !== otp || user.otpExpiry < new Date()) return res.status(401).json({message: "Invalid or Expired OTP"});
         await user.updateOne({otp: null, otpExpiry: null, otpVerified: true});
@@ -273,8 +270,7 @@ const forgotPassword = async (req, res) => {
     try {
         const user = await User.findOne({encryptedToken: token});
         if (!user) return res.status(404).json({message: "User not found"});
-        if (user.otpExpiry < new Date())
-            return res.status(401).json({message: "password reset link expired"});
+        if (user.otpExpiry < new Date()) return res.status(401).json({message: "password reset link expired"});
         const hashedPassword = await passwordHash(password);
         await user.updateOne({
             password: hashedPassword,

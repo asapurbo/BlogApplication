@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4989601f-9b56-4273-b306-aeec05af2332" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Back-End/src/controllers/blogPost/blogPost.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/src/controllers/blogPost/blogPost.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back-End/src/controllers/blogPost/blogPost.validator.js" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/src/controllers/blogPost/blogPost.validator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back-End/src/models/BlogPost.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/src/models/BlogPost.model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back-End/src/routes/blogPost.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/src/routes/blogPost.route.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2wBTgHDbC50uTNVgQsOL8QSHMgZ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Node.js.User.js.executor&quot;: &quot;Debug&quot;,
+    &quot;Node.js.app.js.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.server.js.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;features/BlogPost&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.dev:build.executor&quot;: &quot;Run&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/usr/local/bin/WebStorm/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;GitIgnore&quot;,
+      &quot;SQL&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Back-End/src/controllers/users" />
+      <recent name="$PROJECT_DIR$/Back-End/src/services" />
+      <recent name="$PROJECT_DIR$/front-end/src/app" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-WS-251.23774.424" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4989601f-9b56-4273-b306-aeec05af2332" name="Changes" comment="" />
+      <created>1745514078722</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1745514078722</updated>
+      <workItem from="1745514082016" duration="170000" />
+      <workItem from="1745514271600" duration="4286000" />
+      <workItem from="1745569592000" duration="3758000" />
+      <workItem from="1745581279658" duration="1140000" />
+      <workItem from="1745586206897" duration="16248000" />
+      <workItem from="1745672735118" duration="405000" />
+      <workItem from="1745673522816" duration="6685000" />
+      <workItem from="1745730776092" duration="8077000" />
+      <workItem from="1745756455251" duration="11059000" />
+      <workItem from="1745773515857" duration="9459000" />
+      <workItem from="1745785456546" duration="179000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

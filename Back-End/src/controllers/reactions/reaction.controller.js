@@ -26,8 +26,15 @@ const createReactToBlog = async (req, res) => {
         const {blogId} = req.params
         const {reactionType} = req.body
         const userId = req.user.id
-        const blog = BlogPost.findById(blogId)
+        const blog = await BlogPost.findById(blogId)
+        console.log("react", blog?.reactions)
         if (!blog) return res.status(404).json({message: "Blog post not found"})
+        // if (!Array.isArray(blog.reactions)) {
+        //     blog.reactions = [];
+        // }
+        // if (!blog.reactionCounts) {
+        //     blog.reactionCounts = new Map();
+        // }
         const existingReactionIndex = blog.reactions.findIndex((r) => r.user.toString() === userId.toString())
         if (existingReactionIndex > -1) {
             const existingReaction = blog.reactions[existingReactionIndex]

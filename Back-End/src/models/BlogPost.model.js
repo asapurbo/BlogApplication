@@ -48,7 +48,10 @@ const BlogPostSchema = new Schema({
         type: Boolean,
         default: false
     },
-    reactions: [ReactionSchema],
+    reactions: {
+        type: [ReactionSchema],
+        default: []
+    },
     reactionCounts: {
         type: Map,
         of: Number,

@@ -5,10 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4989601f-9b56-4273-b306-aeec05af2332" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Back-End/src/controllers/blogPost/blogPost.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/src/controllers/blogPost/blogPost.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/src/controllers/blogPost/blogPost.validator.js" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/src/controllers/blogPost/blogPost.validator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/src/models/BlogPost.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/src/models/BlogPost.model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/src/routes/blogPost.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/src/routes/blogPost.route.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/src/app/auth/sign-in/page.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/src/app/auth/sign-up/page.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/src/app/components/OTP.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/src/app/components/SubmitButton.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/src/app/confirm-otp/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back-End/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back-End/.idea/Back-End.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back-End/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back-End/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back-End/src/controllers/auth/auth.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/src/controllers/auth/auth.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back-End/src/controllers/reactions/reaction.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/src/controllers/reactions/reaction.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/app/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/app/layout.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +36,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DeveloperWK&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DeveloperWK/BlogApplication.git&quot;,
+    &quot;accountId&quot;: &quot;a33f29b5-6ff6-439c-84df-de47ef33b011&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -41,7 +64,7 @@
     &quot;Node.js.server.js.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;features/BlogPost&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;development&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -91,6 +114,8 @@
       <workItem from="1745756455251" duration="11059000" />
       <workItem from="1745773515857" duration="9459000" />
       <workItem from="1745785456546" duration="179000" />
+      <workItem from="1746294491750" duration="3775000" />
+      <workItem from="1746367530386" duration="1448000" />
     </task>
     <servers />
   </component>

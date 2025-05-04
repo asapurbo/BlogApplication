@@ -82,7 +82,7 @@ const login = async (req, res) => {
             await twoFactorAuthOtp(email, otp);
             res
                 .status(202)
-                .json({message: "OTP sent. Please verify your 2FA."});
+                .json({message: "OTP sent. Please verify your 2FA.",is2FAEnabled: user.is2FAEnabled,});
         } else if (user.otpVerified) {
             const token = generateToken(user);
             setCookie(res, [

@@ -1,5 +1,4 @@
 'use client'
-
 import './globals.css';
 import Navbar from '@/app/layout/Navbar';
 import { Poppins } from "next/font/google";
@@ -7,7 +6,6 @@ import Flex from "@/app/components/Flex";
 import LeftAside from "@/app/layout/LeftAside";
 import RightAside from "@/app/layout/RightAside";
 import useClick from './hooks/useClick';
-
 const poppins = Poppins({
     subsets: ['latin'],
     weight: ['400', '600', '700'],

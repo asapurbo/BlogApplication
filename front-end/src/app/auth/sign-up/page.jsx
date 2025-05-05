@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useRef, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import SubmitButton from "@/app/components/SubmitButton";
+import {techOccupations} from "@/app/data/occupations";
 function RegisterForm() {
     const {
         register,
@@ -10,7 +11,20 @@ function RegisterForm() {
         watch,
         setValue,
         formState: { errors },
-    } = useForm();
+    } = useForm({
+        mode: 'onBlur',
+        defaultValues: {
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            role: '',
+            occupation: '',
+            bio: '',
+            avatar: null,
+        }
+    });
     const [showPassword, setShowPassword] = useState(false);
     const [preview, setPreview] = useState(null);
     const fileInputRef = useRef(null);
@@ -167,11 +181,14 @@ function RegisterForm() {
                             {...register('occupation', { required: 'Occupation is required' })}
                             className="w-full bg-gray-700 p-2 rounded"
                         >
-                            <option value="">Select Occupation</option>
-                            <option value="developer">Developer</option>
-                            <option value="designer">Designer</option>
-                            <option value="marketer">Marketer</option>
-                            <option value="blogger">Blogger</option>
+                            <option value="" disabled>Select Occupation</option>
+                            {techOccupations?.occupations?.map((occupation,idx)=>(
+                            <option value={occupation} key={idx}>{occupation}</option>
+                            ))}
+
+                            {/*<option value="designer">Designer</option>*/}
+                            {/*<option value="marketer">Marketer</option>*/}
+                            {/*<option value="blogger">Blogger</option>*/}
                         </select>
                     </div>
 

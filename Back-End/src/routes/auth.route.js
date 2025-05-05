@@ -8,10 +8,11 @@ import {
     resetPasswordLink, twoFactorAuth,
     verifyOtp
 } from "../controllers/auth/auth.controller.js";
+import upload from "../config/multer.config.js";
 const router = Router()
 
 router
-    .post('/register',register)
+    .post('/register',upload.single('avatar'),register)
     .post('/login',login)
     .post('/verify',verifyOtp)
     .post('/two-factor-auth',twoFactorAuth)

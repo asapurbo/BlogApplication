@@ -20,14 +20,14 @@ export default function RootLayout({ children }) {
             <body
                 className={`${poppins.variable} antialiased w-full mx-auto`}
             >
-                <Navbar bar={bar}/>
-                <Flex className='relative pt-16 pb-16 md:pb-0 md:pt-24 bg-bg h-screen overflow-y-hidden'>
-                    <LeftAside ref={content}/>
+                {/*<Navbar bar={bar}/>*/}
+                {/*<Flex className='relative pt-16 pb-16 md:pb-0 md:pt-24 bg-bg h-screen overflow-y-hidden'>*/}
+                {/*    <LeftAside ref={content}/>*/}
                     <div className='w-full bg-bg overflow-hidden'>
                         {children}
                     </div>
-                    <RightAside />
-                </Flex>
+                {/*    <RightAside />*/}
+                {/*</Flex>*/}
             </body>
         </html>
     );

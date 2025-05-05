@@ -18,6 +18,7 @@ import resetPassLink from "../../services/reset-pass-link.service.js";
 import userWelcomeMail from "../../services/user-welcome-mail.service.js";
 import loginInfo from "../../utils/loginInfo.js";
 import sendLoginNotificationService from "../../services/sendLoginNotification.service.js";
+import imageUploadService from "../../services/image-upload.service.js";
 
 const register = async (req, res) => {
     const {error} = registerSchema.validate(req.body);
@@ -31,9 +32,10 @@ const register = async (req, res) => {
             country,
             role,
             bio,
-            avatar,
             occupation,
         } = req.body;
+        const file = req.file
+        const fileUrl = await imageUploadService(file)
         const userCheck = await User.findOne({email});
         if (userCheck) return res.json({message: "User already exists"});
         const otp = generateOtp(6);
@@ -47,7 +49,7 @@ const register = async (req, res) => {
             country,
             role,
             bio,
-            avatar,
+            avatar:fileUrl,
             otp,
             otpExpiry,
             otpSecret: otpSecret.base32,

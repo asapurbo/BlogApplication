@@ -10,9 +10,8 @@ const registerSchema = joi.object({
     country: joi.string().default('Bangladesh'),
     role: joi.string().default('user').valid("user", "admin", "writer", "moderator"),
     bio: joi.string().max(150),
-    avatar: joi.string().default(''),
     occupation: joi.string().required()
-})
+}).unknown()
 const loginSchema = joi.object({
     email: joi.string().email().regex(/^[a-z0-9]+([.-]?[a-z0-9]+)*@[a-z]+([.-]?[a-z]+)*(\.[a-z]{2,3})+$/
     ).required(),

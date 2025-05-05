@@ -5,20 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4989601f-9b56-4273-b306-aeec05af2332" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/front-end/src/app/auth/sign-in/page.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front-end/src/app/auth/sign-up/page.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front-end/src/app/components/OTP.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front-end/src/app/components/SubmitButton.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front-end/src/app/confirm-otp/page.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/src/app/auth/sign-up/signUpAction.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/.idea/Back-End.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Back-End/src/controllers/auth/auth.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/src/controllers/auth/auth.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/src/controllers/reactions/reaction.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/src/controllers/reactions/reaction.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back-End/src/controllers/auth/auth.validator.js" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/src/controllers/auth/auth.validator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back-End/src/routes/auth.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/src/routes/auth.route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/next.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/app/auth/sign-up/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/app/auth/sign-up/page.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/src/app/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/app/layout.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,6 +22,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JSX File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -56,34 +50,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Node.js.User.js.executor&quot;: &quot;Debug&quot;,
-    &quot;Node.js.app.js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.server.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;development&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.dev:build.executor&quot;: &quot;Run&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/usr/local/bin/WebStorm/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Node.js.User.js.executor": "Debug",
+    "Node.js.app.js.executor": "Run",
+    "Node.js.server.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "signUplogic",
+    "junie.onboarding.icon.badge.shown": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.dev:build.executor": "Run",
+    "ts.external.directory.path": "/usr/local/bin/WebStorm/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;GitIgnore&quot;,
-      &quot;SQL&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "GitIgnore",
+      "SQL"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/front-end/src/app/user/post/write-post" />
+      <recent name="$PROJECT_DIR$/front-end/src/app/auth" />
       <recent name="$PROJECT_DIR$/Back-End/src/controllers/users" />
       <recent name="$PROJECT_DIR$/Back-End/src/services" />
       <recent name="$PROJECT_DIR$/front-end/src/app" />
@@ -115,7 +111,8 @@
       <workItem from="1745773515857" duration="9459000" />
       <workItem from="1745785456546" duration="179000" />
       <workItem from="1746294491750" duration="3775000" />
-      <workItem from="1746367530386" duration="1448000" />
+      <workItem from="1746367530386" duration="8133000" />
+      <workItem from="1746415411576" duration="3893000" />
     </task>
     <servers />
   </component>

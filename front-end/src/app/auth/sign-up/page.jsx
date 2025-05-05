@@ -3,7 +3,9 @@ import { useForm } from 'react-hook-form';
 import { useRef, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import SubmitButton from "@/app/components/SubmitButton";
-import {techOccupations} from "@/app/data/occupations";
+import { techOccupations } from "@/app/data/occupations";
+import {useRouter} from "next/navigation";
+
 function RegisterForm() {
     const {
         register,
@@ -27,7 +29,10 @@ function RegisterForm() {
     });
     const [showPassword, setShowPassword] = useState(false);
     const [preview, setPreview] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState(null);
     const fileInputRef = useRef(null);
+    const router = useRouter();
     const password = watch('password');
     const passwordRules = {
         length: password?.length >= 8,
@@ -49,14 +54,53 @@ function RegisterForm() {
         }
     };
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        try {
+            setIsSubmitting(true);
+            setSubmitError(null);
+            const formData = new FormData();
+            formData.append('firstName', data.firstName);
+            formData.append('lastName', data.lastName);
+            formData.append('email', data.email);
+            formData.append('password', data.password);
+            formData.append('role', data.role);
+            formData.append('occupation', data.occupation);
+            formData.append('bio', data.bio || '');
+            formData.append('country', data.country || 'Bangladesh');
+
+            if (data.avatar instanceof File) {
+                formData.append('avatar', data.avatar);
+            }
+            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}auth/register`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(result.message || 'Registration failed');
+            }else {
+                router.push(`/auth/confirm-otp?email=${encodeURIComponent(data.email)}`);
+            }
+            setPreview(null);
+        } catch (err) {
+            console.error('Registration error:', err);
+            setSubmitError(err?.error || 'An error occurred during registration');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
+
     return (
         <div className="min-h-screen bg-gray-900 text-white p-8">
             <div className="max-w-3xl mx-auto bg-gray-800 p-6 rounded-xl shadow-lg space-y-6">
                 <h2 className="text-3xl font-bold">Register</h2>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                {submitError && (
+                    <div className="bg-red-500 text-white p-3 rounded mb-4">
+                        {submitError}
+                    </div>
+                )}
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" encType="multipart/form-data">
                     {/* Name Fields */}
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
@@ -84,7 +128,13 @@ function RegisterForm() {
                         <label className="block mb-1">Email</label>
                         <input
                             type="email"
-                            {...register('email', { required: 'Email is required' })}
+                            {...register('email', {
+                                required: 'Email is required',
+                                pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                    message: "Invalid email address"
+                                }
+                            })}
                             className="w-full bg-gray-700 p-2 rounded"
                         />
                         {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
@@ -171,6 +221,7 @@ function RegisterForm() {
                                 <option value="user">User</option>
                                 <option value="writer">Writer</option>
                             </select>
+                            {errors.role && <p className="text-red-500 text-sm">{errors.role.message}</p>}
                         </div>
                     </div>
 
@@ -182,14 +233,11 @@ function RegisterForm() {
                             className="w-full bg-gray-700 p-2 rounded"
                         >
                             <option value="" disabled>Select Occupation</option>
-                            {techOccupations?.occupations?.map((occupation,idx)=>(
-                            <option value={occupation} key={idx}>{occupation}</option>
+                            {techOccupations?.occupations?.map((occupation, idx) => (
+                                <option value={occupation} key={idx}>{occupation}</option>
                             ))}
-
-                            {/*<option value="designer">Designer</option>*/}
-                            {/*<option value="marketer">Marketer</option>*/}
-                            {/*<option value="blogger">Blogger</option>*/}
                         </select>
+                        {errors.occupation && <p className="text-red-500 text-sm">{errors.occupation.message}</p>}
                     </div>
 
                     {/* Bio */}
@@ -202,7 +250,7 @@ function RegisterForm() {
                         ></textarea>
                     </div>
 
-                    {/* Avatar Upload - Fixed Version */}
+                    {/* Avatar Upload */}
                     <div>
                         <label className="block mb-1">Avatar</label>
                         <div className="flex flex-col space-y-3">
@@ -215,7 +263,7 @@ function RegisterForm() {
                             />
                             {errors.avatar && <p className="text-red-500 text-sm">{errors.avatar.message}</p>}
 
-                            {/* Preview with key to force re-render */}
+                            {/* Preview */}
                             {preview && (
                                 <div className="flex items-center space-x-4">
                                     <img
@@ -243,15 +291,13 @@ function RegisterForm() {
                     </div>
 
                     {/* Submit */}
-
-                    {/*<button*/}
-                    {/*    type="submit"*/}
-                    {/*    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded font-semibold transition"*/}
-                    {/*>*/}
-                    {/*    Register*/}
-                    {/*</button>*/}
-                    <SubmitButton btnText='Sign Up' />
-                {/*    className='w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded font-semibold transition'*/}
+                    <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors disabled:bg-blue-400"
+                    >
+                        {isSubmitting ? 'Signing Up...' : 'Sign Up'}
+                    </button>
                 </form>
             </div>
         </div>

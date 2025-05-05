@@ -11,7 +11,7 @@ export default function useClick() {
 
     // Toggle nav visibility on icon click
     const handleClick = useCallback(() => {
-        navRef.current?.classList.toggle('hidden');
+        navRef.current?.classList.toggle('left-5');
     }, []);
 
     // Hide nav if clicking outside of the icon or nav
@@ -20,9 +20,10 @@ export default function useClick() {
             navRef.current &&
             iconRef.current &&
             !iconRef.current.contains(e.target) &&
-            !navRef.current.contains(e.target)
+            !navRef.current.contains(e.target) && Array.from(navRef.current.classList).includes('left-5')
         ) {
-            navRef.current.classList.add('hidden');
+            navRef.current.classList.remove('left-5');
+            navRef.current.classList.add('-left-56');
         }
     }, []);
 
@@ -41,7 +42,7 @@ export default function useClick() {
 
    return {
        bar: iconRef,
-       content: navRef
+       content: navRef,
    }
 };
 
